@@ -1,12 +1,32 @@
 let inputBuscarFilme = document.querySelector("#input-buscar-filme");
 let btnBuscarFilme = document.querySelector("#btn-buscar-filme");
 
-btnBuscarFilme=onclick = () => {
+btnBuscarFilme=onclick = async () => {
     if(inputBuscarFilme.value.length > 0){
-        fetch("http://www.omdbapi.com/?apikey=993cfe2a&s="+inputBuscarFilme.value, {mode:"cors"})
+        let filmes = new Array();
+        fetch("http://www.omdbapi.com/?apikey=993cfe2a&s="+inputBuscarFilme.value)
         .then((resp)=> resp.json())
-        .then((resp)=> {console.log(resp)})
-        console.log(inputBuscarFilme)
+        .then((resp)=> {
+            resp.Search.forEach((item) => {
+                console.log(item);
+                let filme = new Filme(
+                    item.imdbID,
+                    item.Title,
+                    item.Year,
+                    null,
+                    null,
+                    item.Poster,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                );
+                filmes.push(filme);
+            });
+            listarFilmes(filmes);
+        })
+    
     }
     return false;
 }
