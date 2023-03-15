@@ -1,7 +1,7 @@
 let inputBuscarFilme = document.querySelector("#input-buscar-filme");
 let btnBuscarFilme = document.querySelector("#btn-buscar-filme");
 
-btnBuscarFilme=onclick = async () => {
+btnBuscarFilme.onclick = async () => {
     if(inputBuscarFilme.value.length > 0){
         let filmes = new Array();
         fetch("http://www.omdbapi.com/?apikey=993cfe2a&s="+inputBuscarFilme.value)
@@ -26,7 +26,6 @@ btnBuscarFilme=onclick = async () => {
             });
             listarFilmes(filmes);
         })
-    
     }
     return false;
 }
