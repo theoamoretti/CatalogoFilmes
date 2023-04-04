@@ -1,5 +1,9 @@
 let inputBuscarFilme = document.querySelector("#input-buscar-filme");
 let btnBuscarFilme = document.querySelector("#btn-buscar-filme");
+let navFavoritos= document.querySelector("#nav-favoritos")
+    navFavoritos.onclick = () =>{
+    listarFavoritos();
+    }
 
 btnBuscarFilme.onclick = async () => {
     if(inputBuscarFilme.value.length > 0){

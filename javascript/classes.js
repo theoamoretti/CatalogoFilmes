@@ -1,17 +1,3 @@
-class Ator{
-    constructor(id, nome){
-        this.nome=nome;
-        this.id=id;
-    }
-}
-
-class Diretor{
-    constructor(id, nome){
-        this.nome=nome;
-        this.id=id
-    }
-}
-
 class Filme{
     constructor(id, titulo, ano, genero, duracao, cartaz, sinopse, direcao, elenco, classificacao, avaliacao, btnDetalhes, btnFav){
         this.id=id;
@@ -26,7 +12,6 @@ class Filme{
         this.classificacao=classificacao;
         this.avaliacao=avaliacao;
         this.btnDetalhes=null;
-        this.btnFav=null;
     }
 
     getCard = async () =>{
@@ -62,8 +47,8 @@ class Filme{
         this.setBtnDetalhes();
         cardBody.appendChild(this.getBtnDetalhes());
 
-        this.setBtnFav();
-        cardBody.appendChild(this.getBtnFav());
+        this.setBtnRemover();
+        cardBody.appendChild(this.getbtnRemover());
 
         return card;
     }
@@ -122,6 +107,16 @@ class Filme{
         divGeral.appendChild(divDet)
         cardDetalhe.appendChild(divGeral)
 
+        let btnSalvar=document.createElement('button')
+        btnSalvar.appendChild(document.createTextNode('Salvar'))
+        btnSalvar.setAttribute('id', 'btnSalvar')
+        cardDetalhe.appendChild(btnSalvar)
+
+        let btnFechar=document.createElement('button')
+        btnFechar.appendChild(document.createTextNode('Fechar'))
+        btnFechar.setAttribute('id', 'btnFechar')
+        cardDetalhe.appendChild(btnFechar)
+
         return cardDetalhe;
     }
 
@@ -129,23 +124,23 @@ class Filme{
         this.btnDetalhes = document.createElement('button');
         this.btnDetalhes.appendChild(document.createTextNode("Detalhes"));
         this.btnDetalhes.setAttribute("id", this.id);
-        this.btnDetalhes.setAttribute("class", "btnDetalhesFilme");
+        this.btnDetalhes.setAttribute("class", "btn btn-primary btn-sm");
     }
 
     getBtnDetalhes = () =>{
         return this.btnDetalhes;
     }
 
-    setBtnFav = () =>{
-        this.btnFav = document.createElement('button');
-        this.btnFav.appendChild(document.createTextNode("Favorito"));
-        this.btnFav.setAttribute("onclick", "");
+    setBtnRemover = () =>{
+        this.btnRemover = document.createElement('button');
+        this.btnRemover.appendChild(document.createTextNode("Remover"));
+        this.btnRemover.setAttribute("id", this.id);
+        this.btnRemover.setAttribute("class", "btn btn-primary btn-sm");
     }
 
-    getBtnFav = () =>{
-        return this.btnFav;
+    getbtnRemover = () =>{
+        return this.btnRemover;
     }
-
 }
 
 let detalhesFilme = async (id)=>{
@@ -167,9 +162,63 @@ let detalhesFilme = async (id)=>{
         );
         console.log(filme.getDetalhesFilme());
         document.querySelector("#mostrar-filme").appendChild(filme.getDetalhesFilme());
+
+        document.querySelector("#btnFechar").onclick = ()=>{
+            document.querySelector("#lista-filmes").style.display="flex";
+            document.querySelector("#mostrar-filme").innerHTML="";
+            document.querySelector("#mostrar-filme").style.display="none";
+        };
+
+        document.querySelector("#btnSalvar").onclick = ()=>{
+            salvarFilme(filme);
+        };
+
         document.querySelector("#lista-filmes").style.display="none";
         document.querySelector("#mostrar-filme").style.display="flex";
+
     });
+    
+}
+
+let listarFavoritos = () =>{
+let filmesFavoritos=localStorage.getItem('filmesFavoritos');
+filmesFavoritos=JSON.parse(filmesFavoritos);
+let filmes= new Array();
+filmesFavoritos.forEach((item)=>{
+    let filme = new Filme(
+        item.id,
+        item.titulo,
+        item.ano,
+        item.genero,
+        item.duracao,
+        item.cartaz,
+        item.direcao,
+        item.elenco,
+        item.classificacao,
+        item.avaliacao
+    )
+    filmes.push(filme);
+})
+listarFilmes(filmes)
+}
+
+let salvarFilme = (filme)=>{
+    let filmesString = localStorage.getItem('filmesFavoritos');
+    
+    if(filmesString){
+    var filmes=JSON.parse(filmesString)
+    console.log(filmesString)
+        filmes.push(filme);
+    }else{
+        filmes=[filme]
+    }
+    localStorage.setItem('filmesFavoritos',JSON.stringify(filmes))
+    filmes=JSON.stringify(filmes);
+    localStorage.setItem('filmesFavoritos', filmes)
+    let navFavoritos= document.querySelector("#nav-favoritos")
+    navFavoritos.onclick = () =>{
+    listarFavoritos();
+    }
     
 }
 
@@ -186,6 +235,14 @@ let listarFilmes = async (filmes) => {
             filme.getBtnDetalhes().onclick=()=>{
                 detalhesFilme(filme.id);
             }
+            filme.getbtnRemover().onclick=()=>{
+                removerFilme(filmes)
+            }
+
         }); 
     }
+}
+
+let removerFilme = (id) =>{
+    console.log(id)
 }

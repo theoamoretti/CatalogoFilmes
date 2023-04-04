@@ -8,3 +8,15 @@
     flex-wrap: wrap;
     padding: 2rem;
 }
+.card-img-top{
+    width: 14rem;
+}
+.card-title{
+    width: 14rem;
+}
+.card{
+    width: 14rem;
+}
+.card-body{
+    width: 14rem;
+}
