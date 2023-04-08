@@ -4,19 +4,45 @@
 }
 #lista-filmes{
     display: flex;
-    justify-content: start;
+    justify-content: center;
     flex-wrap: wrap;
     padding: 2rem;
 }
+#mostrar-filme{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
 .card-img-top{
-    width: 14rem;
+    height: 19rem;
 }
 .card-title{
-    width: 14rem;
+    width: auto;
 }
 .card{
     width: 14rem;
+    border: solid 0.5px;
+    margin: 0.5rem;
 }
 .card-body{
     width: 14rem;
+    justify-content: space-between;
+}
+.divDetalhes{
+    font-size: small;
+}
+.carddet{
+    width: 60%;
+    margin-top: 3rem;
+}
+.divdet{
+    display: flex;
+}
+.divimg{
+    height: 22rem;
+    margin-top: 1.2rem;
+    display: flex;
+}
+.divgeral{
+    width: 100%;
 }

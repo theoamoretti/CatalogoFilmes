@@ -26,6 +26,7 @@ class Filme{
         hCardTitle.setAttribute("class", "card-title");
         let divDetalhes = document.createElement("div");
         divDetalhes.setAttribute("style", "display:flex; justify-content:space-around;");
+        divDetalhes.setAttribute("class", "divDetalhes");
         let divGenero = document.createElement("div");
         divGenero.setAttribute("style", "flex-grow:1;");
         let divAno = document.createElement("div");
@@ -33,9 +34,9 @@ class Filme{
         let divClassificacao = document.createElement("div");
         divClassificacao.setAttribute("style", "flex-grow:1;");
         hCardTitle.appendChild(document.createTextNode(this.titulo));
-        divGenero.appendChild(document.createTextNode(this.genero));
-        divAno.appendChild(document.createTextNode(this.ano));
-        divClassificacao.appendChild(document.createTextNode(this.classificacao));
+        divGenero.appendChild(document.createTextNode("Gênero: "+this.genero));
+        divAno.appendChild(document.createTextNode("Ano: "+this.ano));
+        divClassificacao.appendChild(document.createTextNode("Duração: "+this.duracao));
         divDetalhes.appendChild(divGenero);
         divDetalhes.appendChild(divAno);
         divDetalhes.appendChild(divClassificacao);
@@ -43,6 +44,7 @@ class Filme{
         card.appendChild(cardBody);
         cardBody.appendChild(hCardTitle);
         cardBody.appendChild(divDetalhes);
+
 
         this.setBtnDetalhes();
         cardBody.appendChild(this.getBtnDetalhes());
@@ -55,17 +57,16 @@ class Filme{
     
     getDetalhesFilme= () =>{
         let cardDetalhe = document.createElement("div");
-        cardDetalhe.setAttribute("class", "card mb-3");
-        cardDetalhe.setAttribute("style", "max-width: 540px;");
+        cardDetalhe.setAttribute("class", "card mb-4 carddet");
         let divGeral= document.createElement("div");
-        divGeral.setAttribute("class", "row g-0");
+        divGeral.setAttribute("class", "row divgeral");
         let divImg= document.createElement("div");
-        divImg.setAttribute("class", "col-md-4");
+        divImg.setAttribute("class", "divimg col-4");
         let imgCartaz = document.createElement("img");
         imgCartaz.setAttribute("class", "img-fluid rounded-start");
         imgCartaz.setAttribute("src", this.cartaz);
         let divDet = document.createElement("div");
-        divDet.setAttribute("class", "col-md-8");
+        divDet.setAttribute("class", "divdet col-8");
         let listaDet = document.createElement("div");
         listaDet.setAttribute("class", "card-body");
         let hCardTitle = document.createElement("h5");
@@ -76,22 +77,22 @@ class Filme{
         plot.appendChild(document.createTextNode(this.sinopse));
         let genre = document.createElement("p");
         genre.setAttribute("class", "card-text");
-        genre.appendChild(document.createTextNode(this.genero));
+        genre.appendChild(document.createTextNode("Gênero: "+this.genero));
         let runtime = document.createElement("p");
         runtime.setAttribute("class", "card-text");
-        runtime.appendChild(document.createTextNode(this.duracao));
+        runtime.appendChild(document.createTextNode("Duração: "+this.duracao));
         let diretor = document.createElement("p");
         diretor.setAttribute("class", "card-text");
-        diretor.appendChild(document.createTextNode(this.direcao));
+        diretor.appendChild(document.createTextNode("Direção: "+this.direcao));
         let atores = document.createElement("p");
         atores.setAttribute("class", "card-text");
-        atores.appendChild(document.createTextNode(this.elenco));
+        atores.appendChild(document.createTextNode("Elenco: "+this.elenco));
         let rating = document.createElement("p");
         rating.setAttribute("class", "card-text");
-        rating.appendChild(document.createTextNode(this.classificacao));
+        rating.appendChild(document.createTextNode("Classificação: "+this.classificacao));
         let vote = document.createElement("p");
         vote.setAttribute("class", "card-text");
-        vote.appendChild(document.createTextNode(this.avaliacao));
+        vote.appendChild(document.createTextNode("Classificação: "+this.avaliacao));
 
         listaDet.appendChild(hCardTitle)
         listaDet.appendChild(plot)
@@ -110,11 +111,13 @@ class Filme{
         let btnSalvar=document.createElement('button')
         btnSalvar.appendChild(document.createTextNode('Salvar'))
         btnSalvar.setAttribute('id', 'btnSalvar')
+        btnSalvar.setAttribute('class', 'btn btn-primary col-2 mt-3')
         cardDetalhe.appendChild(btnSalvar)
 
         let btnFechar=document.createElement('button')
-        btnFechar.appendChild(document.createTextNode('Fechar'))
+        btnFechar.appendChild(document.createTextNode('Voltar'))
         btnFechar.setAttribute('id', 'btnFechar')
+        btnFechar.setAttribute('class', 'btn btn-primary col-2 mb-4 mt-2')
         cardDetalhe.appendChild(btnFechar)
 
         return cardDetalhe;
@@ -135,7 +138,7 @@ class Filme{
         this.btnRemover = document.createElement('button');
         this.btnRemover.appendChild(document.createTextNode("Remover"));
         this.btnRemover.setAttribute("id", this.id);
-        this.btnRemover.setAttribute("class", "btn btn-primary btn-sm");
+        this.btnRemover.setAttribute("class", "btn det btn-primary btn-sm");
     }
 
     getbtnRemover = () =>{
@@ -236,13 +239,14 @@ let listarFilmes = async (filmes) => {
                 detalhesFilme(filme.id);
             }
             filme.getbtnRemover().onclick=()=>{
-                removerFilme(filmes)
+                removerFilme(filme.id)
             }
 
         }); 
     }
+    let removerFilme = (filme) =>{
+        
+        console.log(filmes.splice(filme.id,1))
+    }
 }
 
-let removerFilme = (id) =>{
-    console.log(id)
-}
